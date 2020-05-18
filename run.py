@@ -10,14 +10,14 @@ from interactive_map.site import plot_points
 FIGURE = plt.figure()
 
 
-plotting.show_map()
-dataframe_previously_studied = data.shapefile_to_dataframe(filepath="../Shapes/Previously_studied.shp")  # Locality point plot is run
-dataframe_clifton = data.shapefile_to_dataframe(filepath="../Shapes/Clifton_locations_and_cores.shp")
+#plotting.show_map()
+dataframe_previously_studied = data.shapefile_to_dataframe(filepath="Shapes for interactive map/Previously_studied.shp")  # Locality point plot is run
+dataframe_clifton = data.shapefile_to_dataframe(filepath="Shapes for interactive map/Clifton_locations_and_cores.shp")
 dataframe_all_points = data.combine_and_sort([dataframe_previously_studied, dataframe_clifton])
 
-plotting.show_points(dataframe_all_points)
+#plotting.show_points(dataframe_all_points)
 
-interaction.add_button_press_event(FIGURE, dataframe_all_points)
+#interaction.add_button_press_event(FIGURE, dataframe_all_points)
 
 plot_points(dataframe_all_points)
 
