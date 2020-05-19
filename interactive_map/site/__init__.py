@@ -6,8 +6,14 @@ from dash.dependencies import Input, Output
 import pandas as pd
 import json
 import plotly.graph_objects as go # or plotly.express as px
+import os
+import time
 
-
+def get_time_of_latest_commit():
+    filename = ".git/index"
+    modified_time = time.gmtime(os.path.getmtime(filename))
+    output_string = "Updated on: {}/{}/{}".format(modified_time.tm_mday, modified_time.tm_mon, modified_time.tm_year)
+    return output_string
 
 
 def plot_points(dataframe_all_points):
@@ -66,7 +72,7 @@ def plot_points(dataframe_all_points):
     app.layout = html.Div(children=[
         html.H1(children="Upper Van Mijenfjorden Group interactive map"),
         html.H4(children="Created as part of master thesis project by Anna Bøgh"),
-        html.Div(children="Updated on 18/05/2020"),
+        html.Div(children=get_time_of_latest_commit()),
 
         html.Div(children='''This interactive map was created by the author, Anna Bøgh (MSc student at UiB and UNIS).'''),
 
@@ -88,9 +94,9 @@ def plot_points(dataframe_all_points):
                 
                 To select more points without letting go of the first selection, hold down Shift button.
 
-                To view log data and reference, click on a row. To view log image in greater detail and to download, click on the image. The image will load in another tab in your browser.
+                To view log data and reference, **click on a row**. To view log image in greater detail and to download, click on the image. The image will load in another tab in your browser.
                 
-                (Empty Index name fields indicate no available log image. Instead, please see article reference to learn more.)
+                (Empty Index name fields indicate no available log image. Instead, please see article reference to learn more.) 
             """),
             dash_table.DataTable(
                 id='selected_data',
@@ -174,7 +180,7 @@ def plot_points(dataframe_all_points):
         return list(results.values())
         
 
-    app.run_server(debug=False, port=1337, host="0.0.0.0")
+    app.run_server(debug=True, port=1337, host="0.0.0.0")
 
 # TODO: 
 # 1) 
@@ -184,5 +190,5 @@ def plot_points(dataframe_all_points):
 # 5) 
 # 6) 
 # 7) 
-# 8) Få hjemmesiden ind på Eriks server
+# 8) 
 # 9) 
