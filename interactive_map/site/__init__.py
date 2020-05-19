@@ -88,7 +88,7 @@ def plot_points(dataframe_all_points):
                 
                 To select more points without letting go of the first selection, hold down Shift button.
 
-                To view log data, click the **Index name**. To view log image in greater detail and to download, click on the image. The image will load in another tab in your browser.
+                To view log data and reference, click on a row. To view log image in greater detail and to download, click on the image. The image will load in another tab in your browser.
                 
                 (Empty Index name fields indicate no available log image. Instead, please see article reference to learn more.)
             """),
