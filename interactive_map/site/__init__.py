@@ -1,5 +1,6 @@
 import dash
 import dash_table
+import dash_auth
 import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
@@ -8,6 +9,7 @@ import json
 import plotly.graph_objects as go # or plotly.express as px
 import os
 import time
+from flask import request
 
 def get_time_of_latest_commit():
     filename = ".git/index"
@@ -16,12 +18,13 @@ def get_time_of_latest_commit():
     return output_string
 
 
+VALID_USERNAME_PASSWORD_PAIRS = {"guest": "DoUlikeRockz1"}
+
 def plot_points(dataframe_all_points):
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-    
-
+    auth = dash_auth.BasicAuth(app, VALID_USERNAME_PASSWORD_PAIRS)
 
     data_yes_no_Asp = []
     for criterion in ["yes", "no"]:
@@ -180,7 +183,7 @@ def plot_points(dataframe_all_points):
         return list(results.values())
         
 
-    app.run_server(debug=True, port=1337, host="0.0.0.0")
+    app.run_server(debug=False, port=1337, host="0.0.0.0")
 
 # TODO: 
 # 1) 

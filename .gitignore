@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 venv/
+pass
+reload.sh
+start_server.sh
 
 .vscode/
 # C extensions
