@@ -114,8 +114,19 @@ def plot_points(dataframe_all_points):
         ),
         html.P(children="Reference: Select data in table above", id="reference_paragraph"),
         html.A(id="reference_link", target="_blank"),
-        html.A(children=html.Img(id="log_image", style={"height": "600px", "float": "right", "max-width": "40%", "object-fit": "scale-down"}), target="_blank", id="image_link")
-    ])
+        html.A(children=html.Img(id="log_image", style={"height": "600px", "float": "right", "max-width": "40%", "object-fit": "scale-down"}), target="_blank", id="image_link"),
+        
+        html.Div([
+            html.A(rel="license", href='http://creativecommons.org/licenses/by-nc-sa/4.0/', children=[
+                html.Img(alt='Creative Commons License', style={'border-width':'0'}, src="/static/88x31.png")
+            ]),
+            html.Br(),
+            html.P("This work is licensed under a ", style={"display":"inline"}),
+            html.A(rel="license", href='http://creativecommons.org/licenses/by-nc-sa/4.0/', children="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License")
+        ], style={"bottom": "0%", "position":"fixed"})
+        ])
+
+
 
     @app.callback(
         Output('selected_data', 'data'),
@@ -183,7 +194,7 @@ def plot_points(dataframe_all_points):
         return list(results.values())
         
 
-    app.run_server(debug=False, port=1337, host="0.0.0.0")
+    app.run_server(debug=True, port=1337, host="0.0.0.0")
 
 # TODO: 
 # 1) 
