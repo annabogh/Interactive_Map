@@ -1,0 +1,19 @@
+name: mapenv
+channels:
+  - conda-forge
+
+dependencies: 
+  - python=3
+  - pandas
+  - matplotlib
+  - plotly
+  - pyproj
+  - pyshp
+  - requests
+  - geopandas
+  - pip:
+      - dash_table
+      - dash_core_components
+      - dash
+      - dash_auth
+      - dash_html_components
