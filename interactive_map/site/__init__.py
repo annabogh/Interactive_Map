@@ -84,7 +84,7 @@ def plot_points(dataframe_all_points):
         name="Aspelintoppen Formation"
     ))
 
-    helisurvey = gpd.read_file("Shapes for interactive map\own_localities.shp")
+    helisurvey = gpd.read_file("Shapes for interactive map/own_localities.shp")
     x_cords = []
     y_cords = []
     for geometry in helisurvey.geometry:
