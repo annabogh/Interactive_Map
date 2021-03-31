@@ -10,6 +10,7 @@ import plotly.graph_objects as go # or plotly.express as px
 import os
 import time
 from flask import request
+import geopandas as gpd
 
 def get_time_of_latest_commit():
     filename = ".git/index"
@@ -34,7 +35,7 @@ def plot_points(dataframe_all_points):
             y=data_filling_criterion["Northing"],
             text=data_filling_criterion["Author"] + " " + "(" + data_filling_criterion["Year"].astype(str) + ")",
             mode='markers',
-            name="Contains Asp.Fm" if criterion == "yes" else "Does not contain Asp.Fm",
+            name="Data point includes Asp.Fm" if criterion == "yes" else "Data point excludes Asp.Fm",
             opacity=0.7,
             customdata=data_filling_criterion.index,
             marker={
@@ -43,6 +44,8 @@ def plot_points(dataframe_all_points):
             },
         )
         data_yes_no_Asp.append(data_dictionary)
+
+    
 
     bg_map = go.Figure() # or any Plotly Express function
     #bg_map.add_trace(
@@ -63,6 +66,43 @@ def plot_points(dataframe_all_points):
            )
     )
 
+    aspelintoppen = gpd.read_file("Shapes for interactive map/Aspelintoppen.shp")
+    x_cords = []
+    y_cords = []
+    for geometry in aspelintoppen.geometry:
+
+        x_cords += geometry.exterior.xy[0].tolist() +[None]
+        y_cords += geometry.exterior.xy[1].tolist() +[None]
+
+    bg_map.add_trace(go.Scatter(
+        x=x_cords,
+        y=y_cords,
+        fill="toself",
+        fillcolor="rgb(252, 217, 88)",
+        opacity=0.75,
+        line=dict(color="rgba(0, 0, 0, 0)"),
+        name="Aspelintoppen Formation"
+    ))
+
+    helisurvey = gpd.read_file("Shapes for interactive map\own_localities.shp")
+    x_cords = []
+    y_cords = []
+    for geometry in helisurvey.geometry:
+
+        x_cords += geometry.exterior.xy[0].tolist() +[None]
+        y_cords += geometry.exterior.xy[1].tolist() +[None]
+
+    bg_map.add_trace(go.Scatter(
+        x=x_cords,
+        y=y_cords,
+        fill="toself",
+        fillcolor="rgb(227, 113, 144)",
+        opacity=0.75,
+        line=dict(color="rgba(227, 113, 144, 100)"),
+        name="Aerial images (2020)"
+    ))
+
+
     for data_dictionary in data_yes_no_Asp:  # Plots data from data_dictionary on map
         bg_map.add_trace(data_dictionary)
 
@@ -72,9 +112,11 @@ def plot_points(dataframe_all_points):
             }
 
 
+
+
     app.layout = html.Div(children=[
         html.H1(children="Upper Van Mijenfjorden Group interactive map"),
-        html.H4(children="Created as part of master thesis project by Anna Bøgh"),
+        html.H4(children="Created as part of master thesis project by Anna Bøgh Mannerfelt"),
         html.Div(children=get_time_of_latest_commit()),
 
         html.Div(children='''This interactive map was created by the author, Anna Bøgh (MSc student at UiB and UNIS).'''),
